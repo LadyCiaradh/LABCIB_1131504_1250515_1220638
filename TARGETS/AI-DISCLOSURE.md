@@ -1,33 +1,31 @@
 # AI-usage disclosure
 
-Fill in this file and include it in your submission as `TARGETS/AI-DISCLOSURE.md`.
-You may use AI assistants (e.g., ChatGPT, Claude, Copilot) as a learning and debugging aid;
-disclosure is mandatory. If you did not use any AI tools, write "none" below and keep the confirmation.
-
 - Team (student IDs): 1131504, 1250515, 1220638
-- Assigned Arduino ID: TODO
+- Assigned Arduino ID: 22
 
 ## Tools used
 
-List each AI tool and its version (or "none"):
-
-- Cursor (Grok 4.6) — used to scaffold `TARGETS/` and the submission README (folder layout and question placeholders only)
+- Cursor (Grok) — scaffold inicial de `TARGETS/` e do README de submissão.
+- Claude (Anthropic) — apoio no desenvolvimento e depuração do código do Target 1
+  (camada série, motor do timing attack e geração de gráficos) e na estruturação
+  do relatório.
 
 ## What each tool was used for
 
-Describe how you used each tool (e.g., understanding a concept, debugging a command, drafting text):
-
-- Understanding the assignment structure and required deliverables
-- Drafting the README skeleton and `TARGETS/` layout
+- Compreender a estrutura do trabalho e os entregáveis exigidos.
+- Target 1: ajuda a escrever e afinar os scripts em `code/target1/` (medição por
+  mínimo, medição até ao primeiro byte, varredura comprimento+caráter) e a
+  interpretar os tempos obtidos.
+- Redação e organização do relatório (metodologia, resultados, análise).
 
 ## Targets / sections involved
 
-Which targets or parts of the report the tools contributed to (e.g., Target 1, Target 6, report wording):
-
-- Submission scaffolding only (README, `TARGETS/` tree). No board measurements or target artifacts yet.
+- Submission scaffolding (README, `TARGETS/`).
+- Target 1 (código, medições e redação).
 
 ## Confirmation
 
-We confirm that the artifacts under `TARGETS/` were produced by our team, on our assigned Arduino
-board, and that this disclosure is accurate. We understand that undisclosed or misrepresented AI
-use is an academic-integrity violation.
+Confirmamos que os artefactos sob `TARGETS/` foram produzidos pela nossa equipa,
+na placa Arduino atribuída (ID 22). As medições de tempo, os dados brutos e os
+resultados foram obtidos na nossa placa. Compreendemos que o uso de IA não
+declarado ou deturpado é uma violação de integridade académica.

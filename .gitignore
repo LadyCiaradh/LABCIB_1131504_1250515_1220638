@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+
+# Ficheiros temporarios do Office
+~$*
+
+# Sistema
+.DS_Store
+Thumbs.db
