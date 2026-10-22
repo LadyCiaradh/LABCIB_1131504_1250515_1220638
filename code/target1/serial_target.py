@@ -98,6 +98,31 @@ class SerialTarget:
         return buf.decode(errors="replace")
 
 
+    def send_line(self, text):
+        """Envia uma linha de texto (com \n)."""
+        self.ser.write((text + "\n").encode())
+        self.ser.flush()
+
+    def read_until(self, markers, timeout=8.0, idle=None):
+        """Le ate ver um dos 'markers' (strings, case-insensitive) ou, se 'idle'
+        for dado, ate ficar 'idle' segundos sem dados novos. Devolve texto."""
+        marks = [m.lower().encode() for m in markers]
+        buf = b""
+        t_end = time.perf_counter() + timeout
+        last = time.perf_counter()
+        while time.perf_counter() < t_end:
+            c = self.ser.read(256)
+            if c:
+                buf += c
+                last = time.perf_counter()
+                low = buf.lower()
+                if any(m in low for m in marks):
+                    break
+            elif idle is not None and (time.perf_counter() - last) > idle:
+                break
+        return buf.decode(errors="replace")
+
+
 
 if __name__ == "__main__":
     t = SerialTarget().open()

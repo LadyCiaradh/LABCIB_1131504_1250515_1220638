@@ -1,178 +1,69 @@
 # Embedded Lab — Submission
 
 - **Team:** 1131504, 1250515, 1220638
-- **Arduino identification number:** Arduino 38 e 22
+- **Arduino identification number:** 22 (das placas atribuídas, 38 e 22)
 - **ZIP name (on delivery):** `1131504_1250515_1220638.zip`
 
-Lab statements: [Part I](embedded-lab-part-01.md) · [Part II](embedded-lab-part-02.md)
+Enunciado: [Part I](embedded-lab-part-01.md) · [Part II](embedded-lab-part-02.md)
+Relatório detalhado (com figuras e evidências): `Relatorio_Embedded_Lab_1131504_1250515_1220638.docx`
 
-Fill in every **TODO** below from *this team's assigned board*. Plots and conclusions must be reproducible from the files under `TARGETS/`.
+## Estrutura
 
----
+- `code/` — scripts usados (ferramentas), por target.
+- `TARGETS/` — evidências por target (`target-<n>/`), `secrets.csv` e `AI-DISCLOSURE.md`.
 
-## How to run the code
+## Como correr o código
 
-Scripts live in [`code/`](code/). Replace the commands once each tool exists.
+Pré-requisitos: Python 3, `pip install pyserial matplotlib`. Sysinternals `strings` (para o Target 3). Ajustar `PORT`/`BAUD` em `code/target1/serial_target.py`.
 
-### Target 1 — timing measurements and plots
-
-```text
-TODO: how to connect to the board, invoke the measurement tool, and generate plots from TARGETS/target-1/
+### Target 1 — Developer password (timing attack)
+```
+cd code/target1
+python timing_attack.py scan           # infere comprimento + 1.o caracter
+python timing_attack.py recover 13     # recupera a password (N = comprimento)
+python timing_attack.py finish dansudeulzbl   # ultimo caracter pela resposta
+python plot_timing.py chars            # graficos da 1.a e 2.a letra
+python plot_timing.py scan             # grafico da varredura
 ```
 
-### Target 2 — firmware dump
-
-```text
-TODO: how the dump was obtained and how SHA-256 of each binary is computed
+### Target 2 — Firmware dump
+```
+cd code/target2
+python dump_capture.py 0               # PROGMEM -> progmem.bin + SHA-256
+certutil -hashfile progmem.bin SHA256  # verificacao do hash (Windows)
 ```
 
-### Target 3 — strings
-
-```text
-TODO: command used to produce TARGETS/target-3/strings.txt
+### Target 3 — Strings (inspeção manual)
 ```
-
-### Target 4 — cryptographic assets
-
-```text
-TODO: openssl / entropy commands used
+cd TARGETS\target-2
+strings64 -a -o -nobanner -n 4 progmem.bin > ..\target-3\strings.txt
 ```
+Depois inspecionar `TARGETS/target-3/strings.txt` no editor: `Ctrl+F "Admin"` para a tabela de credenciais e os offsets, `Ctrl+F "MII"` para a chave e a assinatura.
 
-### Target 5 — c&c password
-
-```text
-TODO: openssl decrypt + rainbow-table lookup
-```
-
-### Target 6 — OTP generator
-
-```text
-TODO: how the serial capture was taken and how the next OTP is reproduced
-```
-
-### Target 7 — C&C session
-
-```text
-TODO: how the successful C&C connection was performed (password + OTP)
-```
-
----
-
-## Secrets (`TARGETS/secrets.csv`)
-
-Single CSV line, no header, fields in this order:
-
-1. Arduino ID
-2. Dan's password
-3. Alan's password
-4. c&c password
-5. Final secret
-6. c&c password MD5 (hash recovered from the decrypted signature)
-7. PROGMEM firmware SHA-256
-
-Current file: [`TARGETS/secrets.csv`](TARGETS/secrets.csv)
-
----
-
-## Answers (all assignment questions)
+## Respostas (placa 22)
 
 ### Target 1 — Developer password
+- **Metodo:** timing attack a consola serie. A validacao para no 1.o caracter errado, logo quanto mais caracteres certos, mais tempo demora. Inferimos primeiro o comprimento (varredura comprimento x 1.o caracter) e depois caracter a caracter, escolhendo o de maior tempo (minimo de 60 amostras).
+- **Password (Dan):** `dansudeulzblj`
+- **Comprimento:** 13
+- **Margem por posicao:** ~1 ms (um atraso por caracter correto); posicao 0 ~2 ms (o filler 'a' coincide com o 2.o caracter).
+- **Menor margem:** posicao 10 (0,943 ms), dentro do ruido por ser um unico atraso como as restantes.
 
-**How did you infer the password?** TODO
+### Target 2 — Firmware
+- **SHA-256 (PROGMEM):** `1c1405bab48356252c6671edc00d7d7f8e31981af30438fd0d0e60e8f31b1af2`
+- **Tamanho:** 32768 bytes
+- **Offset da password do developer:** 700 (dialogo embebido) e 18224 (tabela de credenciais do login).
 
-**If a timing attack:** plots of the first and second letters — [`TARGETS/target-1/`](TARGETS/target-1/)  
-**If not:** how long did it take to crack? TODO
+### Target 3 — Strings
+- **2.a password de manutencao (Alan):** `alanimyirtjaawjwdkbzonruikuhxbmvsgykfvtkrirofdikmzvocg`
+- **Offset relativo a do developer:** +25 bytes (Dan em 18224, Alan em 18249).
+- **Comprimento dos blobs base64:** chave 1592 caracteres; assinatura 344 caracteres (= 256 bytes).
 
-**Answer this (from *your* board).**
 
-- Inferred length: TODO
-- Timing margin of the winning character at each position: TODO
-- Position with the *smallest* margin, and why: TODO
+### Targets 4–7
+Por realizar.
 
-**Required artifacts:** raw timing data (candidate × position × samples) and the script that builds the plots.
+## secrets.csv
 
----
-
-### Target 2 — Dumped firmware
-
-**Answer this (from *your* board).**
-
-- SHA-256 of the PROGMEM dump: TODO
-- Byte length of the PROGMEM dump: TODO
-- Offset where the developer password appears: TODO
-
-**Required artifacts:** dumped binaries plus SHA-256 of each, under [`TARGETS/target-2/`](TARGETS/target-2/).
-
----
-
-### Target 3 — Confidential strings
-
-**Relevant strings and why they matter:** TODO (see annotated list in [`TARGETS/target-3/`](TARGETS/target-3/))
-
-**Answer this (from *your* board).**
-
-- Second maintenance password: TODO
-- Byte offset relative to the developer password: TODO
-- Length of the base64 blobs: TODO
-
-**Required artifacts:** full `strings` output and annotated asset list.
-
----
-
-### Target 4 — Cryptographic data
-
-**Answer this (from *your* board).**
-
-- Key size: TODO
-- Structural (ASN.1/DER) bytes that identified the key: TODO
-- Encrypted signature size (bytes): TODO
-- Key-region entropy vs a code region: TODO
-
-**Required artifacts:** extracted key and signature (base64), firmware entropy scan, first lines of `openssl asn1parse` / `openssl rsa -text`.
-
----
-
-### Target 5 — c&c password
-
-**Answer this (from *your* board).**
-
-- MD5 recovered from the decrypted signature: TODO
-- Recovered c&c password: TODO
-- Why a *short* rainbow table is enough: TODO
-
-**Required artifacts:** decrypted `hash` file, openssl decrypt transcript, rainbow-table lookup result.
-
----
-
-### Target 6 — OTP generator
-
-**Answer this (from *your* board).**
-
-- Attempts until the generator repeated (this boot): TODO
-- Value that repeated: TODO
-- Next OTP the generator will produce: TODO
-
-**Required artifacts:** raw serial capture showing the repeat (`.txt`), recovered generator parameters, reproduction of the next expected value.
-
----
-
-### Target 7 — Final secret
-
-**Answer this (from *your* board).**
-
-- How targets 5 and 6 combined to connect: TODO
-
-**Required artifacts:** full serial transcript of the successful C&C connection (OTP accepted + final-secret line).
-
----
-
-## File map
-
-| Path | Role |
-| --- | --- |
-| [`code/`](code/) | Scripts used to talk to the board and process artifacts |
-| [`TARGETS/secrets.csv`](TARGETS/secrets.csv) | One-line secrets for grading |
-| [`TARGETS/AI-DISCLOSURE.md`](TARGETS/AI-DISCLOSURE.md) | Mandatory AI-use disclosure |
-| [`TARGETS/target-1/`](TARGETS/target-1/) … [`target-7/`](TARGETS/target-7/) | Per-target proof-of-work |
-
-Noteworthy / unexpected observations: TODO
+Uma linha, sem cabecalho, campos por esta ordem:
+`Arduino ID, password Dan, password Alan, password c&c, secret final, MD5 da c&c, SHA-256 PROGMEM`.
