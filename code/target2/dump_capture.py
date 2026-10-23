@@ -24,6 +24,7 @@ from serial_target import SerialTarget
 PASSWORD = "dansudeulzblj"
 REGIONS = {"0": ("PROGMEM", 32768), "1": ("EEPROM", 1024), "2": ("SRAM", 36864)}
 HEADER = b"Press Enter to stop"
+_DATA_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "TARGETS", "target-2"))
 
 
 def main():
@@ -60,11 +61,12 @@ def main():
 
         h = raw.find(HEADER); nl = raw.find(b"\n", h)
         data = raw[nl + 1: nl + 1 + size]
-        with open(f"{name.lower()}.bin", "wb") as f:
+        out_bin = os.path.join(_DATA_DIR, f"{name.lower()}.bin")
+        with open(out_bin, "wb") as f:
             f.write(data)
-        with open(f"{name.lower()}_raw.bin", "wb") as f:
+        with open(os.path.join(_DATA_DIR, f"{name.lower()}_raw.bin"), "wb") as f:
             f.write(raw)
-        print(f"{name.lower()}.bin  bytes={len(data)}  (esperado {size})")
+        print(f"{out_bin}  bytes={len(data)}  (esperado {size})")
         print(f"SHA-256: {hashlib.sha256(data).hexdigest()}")
     finally:
         t.close()

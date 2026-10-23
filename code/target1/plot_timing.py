@@ -2,21 +2,35 @@
 Gera os graficos do timing attack a partir dos CSV brutos (Target 1).
 Reproduz as figuras exigidas pelo enunciado (1a e 2a letra) a partir dos dados.
 
+Os dados brutos e as figuras vivem em TARGETS/target-1/. O script localiza essa
+pasta relativamente a si proprio, por isso reproduz as figuras a partir de
+qualquer diretorio de trabalho.
+
 Uso:
-    python plot_timing.py length     -> grafico tempo medio vs comprimento
-    python plot_timing.py chars      -> grafico por caracter (posicoes 0 e 1)
+    python plot_timing.py length   -> tempo medio vs comprimento
+    python plot_timing.py chars    -> grafico por caracter (1a e 2a letra)
+    python plot_timing.py scan     -> separacao do melhor caracter por comprimento
 
 Requisitos: pip install matplotlib
 """
 
+import os
 import sys
 import csv
 import statistics
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
-LEN_CSV = "length_timing.csv"
-POS_CSV = "char_timing.csv"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.normpath(os.path.join(SCRIPT_DIR, "..", "..", "TARGETS", "target-1"))
+
+LEN_CSV = os.path.join(DATA_DIR, "length_timing.csv")
+POS_CSV = os.path.join(DATA_DIR, "char_timing.csv")
+SCAN_CSV = os.path.join(DATA_DIR, "scan_pos0.csv")
+
+
+def out(name):
+    return os.path.join(DATA_DIR, name)
 
 
 def plot_length():
@@ -31,8 +45,8 @@ def plot_length():
     plt.xlabel("Comprimento testado")
     plt.ylabel("Tempo medio de resposta (ms)")
     plt.title("Target 1 - inferencia do comprimento")
-    plt.savefig("length_timing.png", dpi=150, bbox_inches="tight")
-    print("length_timing.png")
+    plt.savefig(out("length_timing.png"), dpi=150, bbox_inches="tight")
+    print(out("length_timing.png"))
 
 
 def plot_char(position):
@@ -48,14 +62,13 @@ def plot_char(position):
     plt.xlabel("Caracter candidato")
     plt.ylabel("Tempo minimo (ms)")
     plt.title(f"Target 1 - posicao {position + 1}")
-    plt.savefig(f"char_timing_pos{position + 1}.png", dpi=150, bbox_inches="tight")
-    print(f"char_timing_pos{position + 1}.png")
+    plt.savefig(out(f"char_timing_pos{position + 1}.png"), dpi=150, bbox_inches="tight")
+    print(out(f"char_timing_pos{position + 1}.png"))
 
 
 def plot_scan():
-    from collections import defaultdict
     data = defaultdict(lambda: defaultdict(list))
-    with open("scan_pos0.csv") as f:
+    with open(SCAN_CSV) as f:
         for r in csv.DictReader(f):
             data[int(r["length"])][r["candidate_char"]].append(int(r["elapsed_ns"]))
     lengths = sorted(data)
@@ -68,8 +81,8 @@ def plot_scan():
     plt.xlabel("Comprimento testado")
     plt.ylabel("Separacao do melhor caracter (ms)")
     plt.title("Target 1 - varredura comprimento x 1o caracter")
-    plt.savefig("scan_gap.png", dpi=150, bbox_inches="tight")
-    print("scan_gap.png")
+    plt.savefig(out("scan_gap.png"), dpi=150, bbox_inches="tight")
+    print(out("scan_gap.png"))
 
 
 def main():

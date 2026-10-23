@@ -32,8 +32,11 @@ FILLER = "a"                              # preenche posicoes ainda desconhecida
 SAMPLES = 60                              # amostras por candidato (reduz ruido)
 SCAN_SAMPLES = 12                         # amostras no modo scan (mais rapido)
 
-LEN_CSV = "length_timing.csv"             # dados brutos da fase de comprimento
-POS_CSV = "char_timing.csv"               # dados brutos da fase caracter a caracter
+import os
+_DATA_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "TARGETS", "target-1"))
+LEN_CSV = os.path.join(_DATA_DIR, "length_timing.csv")   # dados brutos da fase de comprimento
+POS_CSV = os.path.join(_DATA_DIR, "char_timing.csv")     # dados brutos da fase caracter a caracter
+SCAN_CSV = os.path.join(_DATA_DIR, "scan_pos0.csv")      # dados brutos da varredura
 
 
 def measure(target, password, samples=SAMPLES):
@@ -99,7 +102,7 @@ def scan_len_char(target):
     No comprimento certo, o caracter correto separa-se (gap maior)."""
     import csv
     results = []
-    with open("scan_pos0.csv", "w", newline="") as f:
+    with open(SCAN_CSV, "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["length", "candidate_char", "sample", "elapsed_ns"])
         for L in range(1, MAX_LEN + 1):

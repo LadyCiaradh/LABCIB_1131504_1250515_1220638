@@ -14,7 +14,7 @@ Relatório detalhado (com figuras e evidências): `Relatorio_Embedded_Lab_113150
 
 ## Como correr o código
 
-Pré-requisitos: Python 3, `pip install pyserial matplotlib`. Sysinternals `strings` (para o Target 3). Ajustar `PORT`/`BAUD` em `code/target1/serial_target.py`.
+Pré-requisitos: Python 3, `pip install pyserial matplotlib`. Sysinternals `strings` (Target 3) e OpenSSL (Target 4). Ajustar `PORT`/`BAUD` em `code/target1/serial_target.py`.
 
 ### Target 1 — Developer password (timing attack)
 ```
@@ -28,9 +28,9 @@ python plot_timing.py scan             # grafico da varredura
 
 ### Target 2 — Firmware dump
 ```
-cd code/target2
-python dump_capture.py 0               # PROGMEM -> progmem.bin + SHA-256
-certutil -hashfile progmem.bin SHA256  # verificacao do hash (Windows)
+cd code\target2
+python dump_capture.py 0                           # escreve TARGETS\target-2\progmem.bin + imprime SHA-256
+certutil -hashfile ..\..\TARGETS\target-2\progmem.bin SHA256   # verificacao do hash (Windows)
 ```
 
 ### Target 3 — Strings (inspeção manual)
@@ -39,6 +39,17 @@ cd TARGETS\target-2
 strings64 -a -o -nobanner -n 4 progmem.bin > ..\target-3\strings.txt
 ```
 Depois inspecionar `TARGETS/target-3/strings.txt` no editor: `Ctrl+F "Admin"` para a tabela de credenciais e os offsets, `Ctrl+F "MII"` para a chave e a assinatura.
+
+### Target 4 — Dados criptográficos
+```
+cd TARGETS\target-4
+openssl base64 -d -A -in key.b64 -out key.der      # descodifica a chave (base64 -> DER)
+openssl base64 -d -A -in sig.b64 -out sig.bin      # descodifica a assinatura
+openssl asn1parse -inform DER -in key.der > asn1parse_key.txt
+openssl rsa -inform DER -in key.der -text -noout > rsa_text.txt
+python ..\..\code\target4\entropy_scan.py        # entropy.csv + entropy_scan.png
+```
+Os blobs `key.b64` e `sig.b64` são o base64 copiado das strings do firmware (offsets 2954 e 4562).
 
 ## Respostas (placa 22)
 
@@ -60,7 +71,13 @@ Depois inspecionar `TARGETS/target-3/strings.txt` no editor: `Ctrl+F "Admin"` pa
 - **Comprimento dos blobs base64:** chave 1592 caracteres; assinatura 344 caracteres (= 256 bytes).
 
 
-### Targets 4–7
+### Target 4 — Dados criptográficos
+- **Tamanho da chave:** 2048 bits (RSA privada, 2 primos), guardada em claro no firmware.
+- **Bytes ASN.1/DER que a identificam:** SEQUENCE (30 82...); version INTEGER 00; modulus INTEGER de 257 bytes (256 + 1 de sinal = 2048 bits); expoente publico 010001 (65537). Prefixo base64 `MII` = 30 82 (magic DER).
+- **Tamanho da assinatura:** 256 bytes (sig.bin) = um bloco RSA-2048.
+- **Entropy (chave vs codigo):** codigo ~4.63; chave em base64 ~5.98; assinatura em base64 ~5.89; chave descodificada ~7.81 bits/byte (quase aleatoria).
+
+### Targets 5–7
 Por realizar.
 
 ## secrets.csv
