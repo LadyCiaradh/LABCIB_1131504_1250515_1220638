@@ -14,11 +14,11 @@ Relatório detalhado (com figuras e evidências): `Relatorio_Embedded_Lab_113150
 
 ## Como correr o código
 
-Pré-requisitos: Python 3, `pip install pyserial matplotlib`. Sysinternals `strings` (Target 3) e OpenSSL (Target 4). Ajustar `PORT`/`BAUD` em `code/target1/serial_target.py`.
+Pré-requisitos: Python 3, `pip install pyserial matplotlib`. Sysinternals `strings` (Target 3) e OpenSSL (Target 4). Ajustar `PORT`/`BAUD` em `code/target-1/serial_target.py`.
 
 ### Target 1 — Developer password (timing attack)
 ```
-cd code/target1
+cd CODE/target-1
 python timing_attack.py scan           # infere comprimento + 1.o caracter
 python timing_attack.py recover 13     # recupera a password (N = comprimento)
 python timing_attack.py finish dansudeulzbl   # ultimo caracter pela resposta
@@ -28,7 +28,7 @@ python plot_timing.py scan             # grafico da varredura
 
 ### Target 2 — Firmware dump
 ```
-cd code\target2
+cd CODE\target-2
 python dump_capture.py 0                           # escreve TARGETS\target-2\progmem.bin + imprime SHA-256
 certutil -hashfile ..\..\TARGETS\target-2\progmem.bin SHA256   # verificacao do hash (Windows)
 ```
@@ -47,7 +47,7 @@ openssl base64 -d -A -in key.b64 -out key.der      # descodifica a chave (base64
 openssl base64 -d -A -in sig.b64 -out sig.bin      # descodifica a assinatura
 openssl asn1parse -inform DER -in key.der > asn1parse_key.txt
 openssl rsa -inform DER -in key.der -text -noout > rsa_text.txt
-python ..\..\code\target4\entropy_scan.py        # entropy.csv + entropy_scan.png
+python ..\..\CODE\target-4\entropy_scan.py        # entropy.csv + entropy_scan.png
 ```
 Os blobs `key.b64` e `sig.b64` são o base64 copiado das strings do firmware (offsets 2954 e 4562).
 
