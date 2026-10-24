@@ -1,4 +1,4 @@
-# Target 1 — Developer password
+# Target 1 - Developer password
 
 ## Artefactos
 - `length_timing.csv` — tempos por comprimento (varredura de comprimento).
