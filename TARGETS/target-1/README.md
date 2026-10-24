@@ -1,11 +1,11 @@
 # Target 1 - Developer password
 
 ## Artefactos
-- `length_timing.csv` — tempos por comprimento (varredura de comprimento).
-- `scan_pos0.csv` — tempos candidato x posição (varredura do 1.o caracter).
-- `char_timing.csv` — tempos por caracter nas posições analisadas.
-- `char_timing_pos1.png`, `char_timing_pos2.png` — gráficos da 1.a e 2.a letra.
-- `scan_gap.png` — margem de tempo por comprimento.
+- `length_timing.csv` - tempos por comprimento (varredura de comprimento).
+- `scan_pos0.csv` - tempos candidato x posição (varredura do 1.o caracter).
+- `char_timing.csv` - tempos por caracter nas posições analisadas.
+- `char_timing_pos1.png`, `char_timing_pos2.png` - gráficos da 1.a e 2.a letra.
+- `scan_gap.png` - margem de tempo por comprimento.
 - Script que gera os gráficos a partir dos CSV: `CODE/target-1/plot_timing.py` (correr reproduz as figuras).
 
 ## Resposta (placa 22)
