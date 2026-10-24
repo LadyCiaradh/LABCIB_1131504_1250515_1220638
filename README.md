@@ -63,7 +63,7 @@ Os blobs `key.b64` e `sig.b64` são o base64 copiado das strings do firmware (of
 ### Target 2 — Firmware
 - **SHA-256 (PROGMEM):** `1c1405bab48356252c6671edc00d7d7f8e31981af30438fd0d0e60e8f31b1af2`
 - **Tamanho:** 32768 bytes
-- **Offset da password do developer:** 700 (dialogo embebido) e 18224 (tabela de credenciais do login).
+- **Offset da password do developer:** 18224 (tabela de credenciais do login). A password surge tambem no offset 700, no dialogo embebido, mas a resposta e 18224, por ser onde a credencial e guardada e usada no login.
 
 ### Target 3 — Strings
 - **2.a password de manutencao (Alan):** `alanimyirtjaawjwdkbzonruikuhxbmvsgykfvtkrirofdikmzvocg`
