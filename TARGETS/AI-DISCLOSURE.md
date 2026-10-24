@@ -1,7 +1,7 @@
 # AI-usage disclosure
 
-- Team (student IDs): 1131504, 1250515, 1220638
-- Assigned Arduino ID: 22
+- Team (student IDs): Diogo Gomes (1131504), Gabriel Costa (1250515), Joana Soares (1220638)
+- Assigned Arduino ID: 22 & 38
 
 ## Tools used
 
@@ -31,6 +31,6 @@
 ## Confirmation
 
 Confirmamos que os artefactos sob `TARGETS/` foram produzidos pela nossa equipa,
-na placa Arduino atribuída (ID 22). As medições de tempo, os dados brutos, o dump
+nas placas Arduino atribuídas (ID 22 e ID 38). As medições de tempo, os dados brutos, o dump
 do firmware, as strings e o material criptográfico foram obtidos na nossa placa. Compreendemos que o uso de
 IA não declarado ou deturpado é uma violação de integridade académica.
