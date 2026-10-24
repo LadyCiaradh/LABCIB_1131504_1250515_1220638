@@ -18,7 +18,7 @@ o tamanho e o SHA-256.
 
 import sys, os, time, hashlib
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "target1"))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "target-1"))
 from serial_target import SerialTarget
 
 PASSWORD = "dansudeulzblj"
