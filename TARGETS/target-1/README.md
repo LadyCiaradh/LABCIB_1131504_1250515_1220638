@@ -2,9 +2,9 @@
 
 ## Artefactos
 - `length_timing.csv` - tempos por comprimento (varredura de comprimento).
-- `scan_pos0.csv` - tempos candidato x posição (varredura do 1.o carácter).
+- `scan_pos0.csv` - tempos candidato x posição (varredura do 1º carácter).
 - `char_timing.csv` - tempos por carácter nas posições analisadas.
-- `char_timing_pos1.png`, `char_timing_pos2.png` - gráficos da 1.a e 2.a letra.
+- `char_timing_pos1.png`, `char_timing_pos2.png` - gráficos da 1º e 2ª letra.
 - `scan_gap.png` - margem de tempo por comprimento.
 - Script que gera os gráficos a partir dos CSV: `CODE/target-1/plot_timing.py` (correr reproduz as figuras).
 
