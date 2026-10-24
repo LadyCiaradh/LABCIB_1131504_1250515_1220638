@@ -3,7 +3,7 @@
 ## Artefactos
 - `progmem.bin` — dump cru do PROGMEM (32768 bytes).
 - `SHA256SUMS.txt` — SHA-256 do dump.
-- Script de captura: `code/target2/dump_capture.py`.
+- Script de captura: `CODE/target2/dump_capture.py`.
 
 ## Resposta (placa 22)
 - **SHA-256 (PROGMEM):** `1c1405bab48356252c6671edc00d7d7f8e31981af30438fd0d0e60e8f31b1af2`

@@ -12,15 +12,15 @@
 ## What each tool was used for
 
 - Compreender a estrutura do trabalho e os entregáveis exigidos.
-- Target 1: ajuda a escrever e afinar os scripts em `code/target1/` (camada série,
+- Target 1: ajuda a escrever e afinar os scripts em `CODE/target1/` (camada série,
   motor do timing attack, medição por mínimo, medição até ao primeiro byte,
   varredura comprimento+caráter) e a interpretar os tempos obtidos.
-- Target 2: ajuda a escrever e depurar `code/target2/dump_capture.py` (captura em
+- Target 2: ajuda a escrever e depurar `CODE/target2/dump_capture.py` (captura em
   bruto do PROGMEM e cálculo do SHA-256).
 - Target 3: orientação sobre o método de inspeção de strings com a ferramenta
   `strings` e redação da secção correspondente do relatório.
 - Target 4: ajuda na extração dos blobs base64, nos comandos `openssl`
-  (asn1parse, rsa -text) e no script de entropy (`code/target4/entropy_scan.py`).
+  (asn1parse, rsa -text) e no script de entropy (`CODE/target4/entropy_scan.py`).
 - Redação e organização do relatório (metodologia, resultados, análise).
 
 ## Targets / sections involved
