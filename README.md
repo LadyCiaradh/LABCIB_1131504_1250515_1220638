@@ -18,7 +18,7 @@ Pré-requisitos: Python 3, `pip install pyserial matplotlib`. Sysinternals `stri
 
 ### Target 1 — Developer password (timing attack)
 ```
-cd CODE/target-1
+cd code/target-1
 python timing_attack.py scan           # infere comprimento + 1.o caracter
 python timing_attack.py recover 13     # recupera a password (N = comprimento)
 python timing_attack.py finish dansudeulzbl   # ultimo caracter pela resposta
@@ -28,7 +28,7 @@ python plot_timing.py scan             # grafico da varredura
 
 ### Target 2 — Firmware dump
 ```
-cd CODE\target-2
+cd code\target-2
 python dump_capture.py 0                           # escreve TARGETS\target-2\progmem.bin + imprime SHA-256
 certutil -hashfile ..\..\TARGETS\target-2\progmem.bin SHA256   # verificacao do hash (Windows)
 ```
@@ -47,9 +47,18 @@ openssl base64 -d -A -in key.b64 -out key.der      # descodifica a chave (base64
 openssl base64 -d -A -in sig.b64 -out sig.bin      # descodifica a assinatura
 openssl asn1parse -inform DER -in key.der > asn1parse_key.txt
 openssl rsa -inform DER -in key.der -text -noout > rsa_text.txt
-python ..\..\CODE\target-4\entropy_scan.py        # entropy.csv + entropy_scan.png
+python ..\..\code\target-4\entropy_scan.py        # entropy.csv + entropy_scan.png
 ```
 Os blobs `key.b64` e `sig.b64` são o base64 copiado das strings do firmware (offsets 2954 e 4562).
+
+### Target 5 — c&c password
+```
+cd TARGETS\target-5
+openssl pkeyutl -decrypt -inkey ..\target-4\key.der -keyform DER -in ..\target-4\sig.bin -out hash.json
+type hash.json
+findstr "<MD5_do_hash.json>" ..\..\..\Rainbowtablee.txt > rainbow_lookup.txt
+```
+A "assinatura" (sig.bin) é na verdade um bloco encriptado com a chave pública; abre-se com a privada (do T4). O JSON tem um MD5; procura-se esse MD5 na coluna de hashes da rainbow table para obter a password.
 
 ## Respostas (placa 22)
 
@@ -77,7 +86,12 @@ Os blobs `key.b64` e `sig.b64` são o base64 copiado das strings do firmware (of
 - **Tamanho da assinatura:** 256 bytes (sig.bin) = um bloco RSA-2048.
 - **Entropy (chave vs codigo):** codigo ~4.63; chave em base64 ~5.98; assinatura em base64 ~5.89; chave descodificada ~7.81 bits/byte (quase aleatoria).
 
-### Targets 5–7
+### Target 5 — c&c password
+- **MD5 recuperado da assinatura:** `e07fcd7e6951d04659c4a8debe8e63de`
+- **Password do c&c:** `cncazezuxmihjpgrddzjnemmyzajtwcyqufqqrqcrsoqhsdtnnwwa`
+- **Porque chega uma rainbow table curta:** as passwords do c&c sao de um conjunto pequeno e conhecido (prefixo `cnc`, comprimento fixo) e o MD5 nao tem salt, logo basta pre-calcular as candidatas em vez de todo o espaco de strings.
+
+### Targets 6–7
 Por realizar.
 
 ## secrets.csv

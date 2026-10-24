@@ -5,7 +5,7 @@
 - `key.der`, `sig.bin` — versões binárias (base64 descodificado com `openssl base64 -d -A`).
 - `asn1parse_key.txt` — saída de `openssl asn1parse` sobre a chave.
 - `rsa_text.txt` — saída de `openssl rsa -text` sobre a chave.
-- `entropy.csv`, `entropy_scan.png` — scan de entropy do firmware (`CODE/target-4/entropy_scan.py`).
+- `entropy.csv`, `entropy_scan.png` — scan de entropy do firmware (`code/target-4/entropy_scan.py`).
 
 ## Resposta (placa 22)
 - **Tamanho da chave:** 2048 bits (RSA privada, 2 primos).

@@ -6,7 +6,7 @@
 - `char_timing.csv` - tempos por carácter nas posições analisadas.
 - `char_timing_pos1.png`, `char_timing_pos2.png` - gráficos da 1º e 2ª letra.
 - `scan_gap.png` - margem de tempo por comprimento.
-- Script que gera os gráficos a partir dos CSV: `CODE/target-1/plot_timing.py` (correr reproduz as figuras).
+- Script que gera os gráficos a partir dos CSV: `code/target-1/plot_timing.py` (correr reproduz as figuras).
 
 ## Resposta (placa 22)
 - **Comprimento inferido:** 13.
@@ -19,4 +19,4 @@
 - **Posição com menor margem:** Tal como na placa 22, as posições 1-11 correspondem todas a um único atraso (~0.9 ms), por isso as margens são praticamente iguais.
 
 ## Reproduzir
-Com a placa ligada: `CODE/target-1/timing_attack.py` (scan, recover, finish). Offline: `CODE/target-1/plot_timing.py` sobre os CSV reproduz os gráficos.
+Com a placa ligada: `code/target-1/timing_attack.py` (scan, recover, finish). Offline: `code/target-1/plot_timing.py` sobre os CSV reproduz os gráficos.
