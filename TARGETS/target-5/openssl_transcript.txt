@@ -1,0 +1,15 @@
+Target 5 - transcript openssl (decriptacao da assinatura e lookup)
+
+# A "assinatura" (sig.bin, do Target 4) abre com a chave PRIVADA, nao com a publica.
+$ openssl pkeyutl -decrypt -inkey ..\target-4\key.der -keyform DER -in ..\target-4\sig.bin -out hash.json
+$ type hash.json
+{"hash": "e07fcd7e6951d04659c4a8debe8e63de"}
+
+# Lookup do MD5 na rainbow table fornecida.
+$ findstr "e07fcd7e6951d04659c4a8debe8e63de" ..\..\..\Rainbowtablee.txt > rainbow_lookup.txt
+$ type rainbow_lookup.txt
+cncazezuxmihjpgrddzjnemmyzajtwcyqufqqrqcrsoqhsdtnnwwa e07fcd7e6951d04659c4a8debe8e63de
+
+# Confirmacao (round-trip): md5(password) == hash recuperado.
+$ certutil -hashfile pw.txt MD5
+e07fcd7e6951d04659c4a8debe8e63de

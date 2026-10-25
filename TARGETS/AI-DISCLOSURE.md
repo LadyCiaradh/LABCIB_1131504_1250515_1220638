@@ -1,13 +1,13 @@
 # AI-usage disclosure
 
-- Team (student IDs): 1131504, 1250515, 1220638
-- Assigned Arduino ID: 22
+- Team (student IDs): Diogo Gomes (1131504), Gabriel Costa (1250515), Joana Soares (1220638)
+- Assigned Arduino ID: 22 & 38
 
 ## Tools used
 
 - Cursor (Grok) — scaffold inicial de `TARGETS/` e do README de submissão.
 - Claude (Anthropic) — apoio no desenvolvimento e depuração do código e na
-  estruturação do relatório, ao longo dos Targets 1 a 4.
+  estruturação do relatório, ao longo dos Targets 1 a 5.
 
 ## What each tool was used for
 
@@ -26,11 +26,11 @@
 ## Targets / sections involved
 
 - Submission scaffolding (README, `TARGETS/`).
-- Targets 1, 2, 3 e 4 (código, evidências e redação).
+- Targets 1, 2, 3, 4 e 5 (código, comandos, evidências e redação).
 
 ## Confirmation
 
 Confirmamos que os artefactos sob `TARGETS/` foram produzidos pela nossa equipa,
-na placa Arduino atribuída (ID 22). As medições de tempo, os dados brutos, o dump
+nas placas Arduino atribuídas (ID 22 e ID 38). As medições de tempo, os dados brutos, o dump
 do firmware, as strings e o material criptográfico foram obtidos na nossa placa. Compreendemos que o uso de
 IA não declarado ou deturpado é uma violação de integridade académica.
