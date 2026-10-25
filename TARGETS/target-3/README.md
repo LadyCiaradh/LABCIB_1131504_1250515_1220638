@@ -5,11 +5,11 @@
 - `annotated_assets.md` - lista anotada dos assets e porque são relevantes.
 
 ## Resposta (placa 22)
-- **2.a password de manutenção (Alan):** `alanimyirtjaawjwdkbzonruikuhxbmvsgykfvtkrirofdikmzvocg`
+- **Password de manutenção (Alan):** `alanimyirtjaawjwdkbzonruikuhxbmvsgykfvtkrirofdikmzvocg`
 - **Offset relativo à password de developer:** +25 bytes (Dan em 18224, Alan em 18249).
 
 ## Resposta (placa 38)
-- **2.a password de manutenção (Alan):** `alanyangksdbajomxyrtbbtfkiicwyqybmbwigdyecluhrdbfymgdf`
+- **Password de manutenção (Alan):** `alanyangksdbajomxyrtbbtfkiicwyqybmbwigdyecluhrdbfymgdf`
 - **Offset relativo à password de developer:** +25 bytes (Dan em 18222, Alan em 18247).
 
 ## Gerar
