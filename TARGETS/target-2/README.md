@@ -1,8 +1,8 @@
 # Target 2 - Dumped Firmware
 
 ## Artefactos
-- `progmem.bin` — dump cru do PROGMEM (32768 bytes).
-- `SHA256SUMS.txt` — SHA-256 do dump.
+- `progmem.bin` - dump cru do PROGMEM (32768 bytes).
+- `SHA256SUMS.txt` - SHA-256 do dump.
 - Script de captura: `code/target-2/dump_capture.py`.
 
 ## Resposta (placa 22)
