@@ -2,7 +2,13 @@
 
 ## Artefactos
 - `strings.txt` - output completo do `strings` (formato `offset:texto`).
-- `annotated_assets.md` - lista anotada dos assets e porque são relevantes.
+
+## Como gerar
+```
+cd TARGETS\target-2
+strings64 -a -o -nobanner -n 4 progmem.bin > ..\target-3\strings.txt
+```
+Depois inspecionar `strings.txt`: `Ctrl+F "Admin"` para as credenciais e offsets, `Ctrl+F "MII"` para a chave e a assinatura.
 
 ## Resposta (placa 22)
 Fonte: `progmem.bin` (dump PROGMEM do Target 2, 32768 bytes). Offsets em decimal.
@@ -30,12 +36,23 @@ Output completo em `strings.txt`.
 Conversa que explica a necessidade de chave privada + assinatura + nonce (OTP) para ligar ao C&C de forma segura. Pistas para os targets seguintes.
 
 ## Resposta (placa 38)
-- **Password de manutenção (Alan):** `alanyangksdbajomxyrtbbtfkiicwyqybmbwigdyecluhrdbfymgdf`
-- **Offset relativo à password de developer:** +25 bytes (Dan em 18222, Alan em 18247).
+Fonte: `progmem.bin` (dump PROGMEM do Target 2, 32768 bytes). Offsets em decimal.
+Output completo em `strings.txt`.
 
-## Gerar
-```
-cd TARGETS\target-2
-strings64 -a -o -nobanner -n 4 progmem.bin > ..\target-3\strings.txt
-```
-Depois inspecionar `strings.txt`: `Ctrl+F "Admin"` para as credenciais e offsets, `Ctrl+F "MII"` para a chave e a assinatura.
+### Credenciais (tabela em ~18208–18300)
+- 18208 `Developer Dan` - rótulo.
+- 18222 `danzhbmzndzdd` - password do developer (Dan), 13 caracteres. Aparece também em 700 (no diálogo embebido).
+- 18236 `Admin Alan` - rótulo.
+- 18247 `alanyangksdbajomxyrtbbtfkiicwyqybmbwigdyecluhrdbfymgdf` - Password de manutenção (Alan), 54 caracteres. Fica 25 bytes depois da do Dan.
+
+### Material criptográfico (Targets 4 e 5)
+- 2968 Chave privada RSA em base64 (`MIIEowIBAAKCAQEA...`). 1588 caracteres → 1191 bytes DER (PKCS#1). Chave RSA-2048.
+- 4591 Assinatura em base64 (`Y0ZME+yj...`). 344 caracteres → 256 bytes. Compatível com assinatura RSA-2048.
+
+### Consola / login / dump
+- 17734 `Password: `, 17745 `Wrong password`, 18040 `Enter password for vending machine number `, 18086 `Logged in as `, 18100 `Login failure`.
+- 17954 `Press Enter to stop`, 17975 `Dumping Interrupted`, 18023 `Finished dumping` - mensagens do menu de dump.
+
+### C&C (Targets 5/6/7)
+- 17712 `Connecting to the C&C`, 17760 `OTP: `, 17766 `Incorrect OTP, got `, 17786 `, was expecting `, 17803 `CONGRATULATIONS! You have successfully connected to the C&C`, 17863 `Here is the final secret: `, 17890 `TODO: Replace this with actual connection to C&C`, 17939 `Signed-By: Dan`.
+
