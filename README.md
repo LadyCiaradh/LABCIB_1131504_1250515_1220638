@@ -49,7 +49,7 @@ openssl asn1parse -inform DER -in key.der > asn1parse_key.txt
 openssl rsa -inform DER -in key.der -text -noout > rsa_text.txt
 python ..\..\code\target-4\entropy_scan.py        # entropy.csv + entropy_scan.png
 ```
-Os blobs `key.b64` e `sig.b64` são o base64 copiado das strings do firmware (offsets 2954 e 4562).
+Os blobs key.b64 e sig.b64 são o base64 copiado das strings do firmware (linhas em 2954 e 4562; os blobs começam em 2968 e 4595, depois do prefixo do diálogo).
 
 ### Target 5 - c&c password
 ```
