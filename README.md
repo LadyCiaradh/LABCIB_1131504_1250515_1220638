@@ -104,8 +104,9 @@ Entrar como Admin Alan leva ao fluxo do C&C. Dando a password do C&C e OTPs inva
 - **Proxima OTP:** 2779.
 - **Gerador recuperado:** X(n+1) = 3693 * X(n) mod 4096 (a=3693, c=0, m=4096), multiplicativo.
 
-### Target 7
-Por realizar.
+### Target 7 — Final secret
+- **Secret final:** `calmvacationquiltmonkey`
+- **Como os targets 5 e 6 se combinaram:** a ligacao ao C&C exige a password do C&C (Target 5) E uma OTP valida ao mesmo tempo. O Target 6 quebrou o gerador de OTP, logo prevemos a OTP esperada. Password (T5) + OTP prevista (T6) -> ligacao aceite -> secret.
 
 ## secrets.csv
 

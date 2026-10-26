@@ -1,0 +1,17 @@
+Target 7 - ligacao ao C&C (transcript serial, placa 22)
+
+Logged in as Admin Alan
+Connecting to the C&C
+Password: OTP: Incorrect OTP, got 0, was expecting 2826
+OTP: CONGRATULATIONS! You have successfully connected to the C&C
+Here is the final secret: calmvacationquiltmonkey
+Signed-By: Dan
+
+Como se obteve:
+- Login como Admin Alan (password do Target 3) -> leva ao fluxo do C&C.
+- Password do C&C: a do Target 5 (cncazezuxmihjpgrddzjnemmyzajtwcyqufqqrqcrsoqhsdtnnwwa).
+- OTP: enviou-se um dummy (0); a placa revelou a esperada (2826); o proximo OTP
+  calculou-se com o gerador do Target 6: (3693 * 2826) mod 4096 = 3906.
+- Enviou-se 3906 -> aceite -> secret final.
+
+Secret final: calmvacationquiltmonkey
