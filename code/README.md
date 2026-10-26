@@ -54,7 +54,7 @@ Sem código próprio. As strings são extraídas com a ferramenta `strings`
 credenciais, offsets e blobs) é manual, no editor.
 
 ```
-strings64 -a -o -nobanner -n 4 progmem.bin > strings.txt
+strings64 -a -o -nobanner -n 4 progmem.bin > strings-22.txt
 ```
 
 Comando completo e passos de inspeção: ver `TARGETS/target-3/README.md`.
