@@ -36,9 +36,9 @@ certutil -hashfile ..\..\TARGETS\target-2\progmem.bin SHA256   # verificacao do 
 ### Target 3 - Strings (inspeção manual)
 ```
 cd TARGETS\target-2
-strings64 -a -o -nobanner -n 4 progmem.bin > ..\target-3\strings.txt
+strings64 -a -o -nobanner -n 4 progmem.bin > ..\target-3\strings-22.txt
 ```
-Depois inspecionar `TARGETS/target-3/strings.txt` no editor: `Ctrl+F "Admin"` para a tabela de credenciais e os offsets, `Ctrl+F "MII"` para a chave e a assinatura.
+Depois inspecionar `TARGETS/target-3/strings-22.txt` no editor: `Ctrl+F "Admin"` para a tabela de credenciais e os offsets, `Ctrl+F "MII"` para a chave e a assinatura.
 
 ### Target 4 - Dados criptográficos
 ```
