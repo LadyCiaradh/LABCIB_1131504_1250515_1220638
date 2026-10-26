@@ -7,7 +7,7 @@
 
 - Cursor (Grok) — scaffold inicial de `TARGETS/` e do README de submissão.
 - Claude (Anthropic) — apoio no desenvolvimento e depuração do código e na
-  estruturação do relatório, ao longo dos Targets 1 a 6.
+  estruturação do relatório, ao longo dos Targets 1 a 7.
 
 ## What each tool was used for
 
@@ -26,7 +26,7 @@
 ## Targets / sections involved
 
 - Submission scaffolding (README, `TARGETS/`).
-- Targets 1, 2, 3, 4, 5 e 6 (código, comandos, evidências e redação).
+- Targets 1 a 7 (código, comandos, evidências e redação).
 
 ## Confirmation
 
