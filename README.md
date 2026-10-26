@@ -60,6 +60,13 @@ findstr "<MD5_do_hash.json>" ..\..\..\Rainbowtablee.txt > rainbow_lookup.txt
 ```
 A "assinatura" (sig.bin) é na verdade um bloco encriptado com a chave pública; abre-se com a privada (do T4). O JSON tem um MD5; procura-se esse MD5 na coluna de hashes da rainbow table para obter a password.
 
+### Target 6 — OTP generator
+```
+cd code\target-6
+python otp_crack.py        # captura ate repetir + recupera o LCG -> TARGETS\target-6\otp_capture.txt
+```
+Entrar como Admin Alan leva ao fluxo do C&C. Dando a password do C&C e OTPs invalidas, cada erro revela a OTP esperada ("was expecting N"). Captura-se a sequencia ate repetir e recupera-se o gerador (LCG) a partir dos dados.
+
 ## Respostas (placa 22)
 
 ### Target 1 — Developer password
@@ -91,7 +98,13 @@ A "assinatura" (sig.bin) é na verdade um bloco encriptado com a chave pública;
 - **Password do c&c:** `cncazezuxmihjpgrddzjnemmyzajtwcyqufqqrqcrsoqhsdtnnwwa`
 - **Porque chega uma rainbow table curta:** as passwords do c&c sao de um conjunto pequeno e conhecido (prefixo `cnc`, comprimento fixo) e o MD5 nao tem salt, logo basta pre-calcular as candidatas em vez de todo o espaco de strings.
 
-### Targets 6–7
+### Target 6 — OTP generator
+- **Periodo (este boot):** 1024 tentativas (depende da seed: impar -> 1024, par -> ate 512).
+- **Valor que repetiu:** 2779.
+- **Proxima OTP:** 2779.
+- **Gerador recuperado:** X(n+1) = 3693 * X(n) mod 4096 (a=3693, c=0, m=4096), multiplicativo.
+
+### Target 7
 Por realizar.
 
 ## secrets.csv
