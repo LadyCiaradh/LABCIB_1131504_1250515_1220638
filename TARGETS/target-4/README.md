@@ -14,7 +14,7 @@
 - **Tamanho da assinatura:** 256 bytes (bloco RSA-2048).
 - **Entropy chave vs código:** texto (diálogo) ~4.63; chave base64 ~5.98; código AVR ~6.3; chave descodificada ~7.81 bits/byte. O base64 sobe acima do texto mas fica abaixo do código (limite de 6 bits/byte da codificação); só a chave descodificada ultrapassa o código.
 
-![Entropy do Firmware Maquina 22](IMG/Entropy-22.png)
+![Entropy do Firmware Maquina 22](../../IMG/Entropy-22.png)
 
 ## Resposta (placa 38)
 - **Comprimento dos blobs base64:** chave 1588 caracteres; assinatura 344 (= 256 bytes).
@@ -23,7 +23,7 @@
 - **Tamanho da assinatura:** 256 bytes (bloco RSA-2048).
 - **Entropy chave vs código:** texto (diálogo) ~4.5; chave base64 ~5.98; código AVR ~6.3; chave descodificada ~7.8 bits/byte. O base64 sobe acima do texto mas fica abaixo do código (limite de 6 bits/byte da codificação); só a chave descodificada ultrapassa o código.
 
-![Entropy do Firmware Maquina 38](IMG/Entropy-38.png)
+![Entropy do Firmware Maquina 38](../../IMG/Entropy-38.png)
 
 ## Reproduzir
 Ver a secção Target 4 no README raiz (descodificação com openssl + `entropy_scan.py`).
