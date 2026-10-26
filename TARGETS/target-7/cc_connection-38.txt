@@ -1,4 +1,4 @@
-Target 7 - Ligação ao C&C (transcript serial, placa 22)
+Target 7 - Ligação ao C&C (transcript serial, placa 38)
 
 Logged in as Admin Alan
 Connecting to the C&C
