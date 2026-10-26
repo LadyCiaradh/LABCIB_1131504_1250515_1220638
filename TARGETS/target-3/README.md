@@ -7,7 +7,7 @@
 ## Como gerar
 ```
 cd TARGETS\target-2
-strings64 -accepteula -a -o -nobanner -n 4 progmem-22.bin > ..\target-3\strings-22.txt
+strings64 -accepteula -a -o -nobanner -n 4 progmem.bin > ..\target-3\strings-22.txt
 strings64 -accepteula -a -o -nobanner -n 4 progmem-38.bin > ..\target-3\strings-38.txt
 ```
 Depois inspecionar os ficheiros:
