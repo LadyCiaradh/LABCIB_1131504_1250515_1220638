@@ -1,72 +1,77 @@
 # Code
 
-Scripts used to talk to the Arduino and to turn raw artifacts into plots and derived files.
+Scripts usados para comunicar com o Arduino e para transformar os artefactos em
+bruto em gráficos e ficheiros derivados. A camada de I/O série é mantida genérica
+(`serial_target.py`) para que o mesmo código de sessão/comunicação seja
+reutilizado entre targets; cada target acrescenta só a sua lógica por cima.
 
-The serial I/O layer is kept generic (`serial_target.py`) so the same session/communication code is reused across targets; each target adds only its own logic on top.
+Todos os comandos assumem que estás dentro da pasta do target e que a placa está
+na porta COM certa (COM3 para a placa 22, COM5 para a placa 38), 115200 baud,
+terminador New Line. Instala as dependências Python uma vez com
+`pip install pyserial matplotlib`.
 
-All commands assume you are inside the target's folder and that the board is on the right COM port (COM3 for board 22, COM5 for board 38), 115200 baud, New Line ending. Install the Python deps once with `pip install pyserial matplotlib`.
+## Target 1 - Developer password (timing attack)
 
-## Target 1 - Developer Password (timing attack)
+Pasta: `target-1/`
 
-Path: [`target1/`](target1/)
-
-- `serial_target.py` - generic serial session (open port, send, timed read).
-- `timing_attack.py` - length/character recovery via response timing.
-- `plot_timing.py` - builds the timing graphs from the raw samples.
-
-```
-cd target1
-python timing_attack.py scan            # infer length + 1st character
-python timing_attack.py recover 13      # recover full password (length 13)
-python timing_attack.py finish <partial># confirm last character by response
-python plot_timing.py scan              # length-scan graph
-python plot_timing.py chars             # 1st/2nd character graphs
-```
-
-Raw samples are written as `.csv` next to the scripts and consumed by `plot_timing.py`, so the figures are reproducible from the data.
-
-## Target 2 - Firmware Dump
-
-Path: [`target2/`](target2/)
-
-- `dump_capture.py` - logs in, navigates the dev menu, reads the raw PROGMEM, writes `progmem.bin` and prints its SHA-256.
+- `serial_target.py` - sessão série genérica (abrir porta, enviar, leitura cronometrada).
+- `timing_attack.py` - recuperação de comprimento/caracteres pelo tempo de resposta.
+- `plot_timing.py` - gera os gráficos de tempo a partir das amostras em bruto.
 
 ```
-cd target2
+cd target-1
+python timing_attack.py scan            # infere comprimento + 1.o caracter
+python timing_attack.py recover 13      # recupera a password (comprimento 13)
+python timing_attack.py finish <parcial># confirma o último caracter pela resposta
+python plot_timing.py scan              # gráfico da varredura de comprimento
+python plot_timing.py chars             # gráficos do 1.o/2.o caracter
+```
+
+As amostras em bruto são gravadas em `.csv` junto aos scripts e consumidas pelo
+`plot_timing.py`, por isso as figuras são reproduzíveis a partir dos dados.
+
+## Target 2 - Firmware dump
+
+Pasta: `target-2/`
+
+- `dump_capture.py` - faz login, navega o menu de developer, lê o PROGMEM em
+  bruto, escreve `progmem.bin` e imprime o seu SHA-256.
+
+```
+cd target-2
 python dump_capture.py 0                # 0 = PROGMEM -> TARGETS/target-2/progmem.bin + SHA-256
 ```
 
-Verify independently with `certutil -hashfile ..\..\TARGETS\target-2\progmem.bin SHA256` (Windows) or `sha256sum` (Linux/macOS). A valid dump is 32768 bytes and starts with `0c 94` (AVR vector table).
+Verificar de forma independente com
+`certutil -hashfile ..\..\TARGETS\target-2\progmem.bin SHA256` (Windows) ou
+`sha256sum` (Linux/macOS). Um dump válido tem 32768 bytes e começa por `0c 94`
+(tabela de vetores do AVR).
 
-## Target 3 - Confidential Strings
+## Target 3 - Confidential strings
 
-Path: [`target3/`](target3/)
-
-No custom build step: strings are extracted with the `strings` tool and offsets with `-o`.
+Sem código próprio. As strings são extraídas com a ferramenta `strings`
+(Sysinternals no Windows) e os offsets com `-o`. A inspeção (procurar
+credenciais, offsets e blobs) é manual, no editor.
 
 ```
 strings64 -a -o -nobanner -n 4 progmem.bin > strings.txt
 ```
 
-`find_offset.py` is a small helper to locate a string's byte offset directly in the binary (more reliable than eyeballing `strings.txt`):
+Comando completo e passos de inspeção: ver `TARGETS/target-3/README.md`.
+
+## Target 4 - Cryptographic data
+
+Pasta: `target-4/`
+
+- `entropy_scan.py` - entropy de Shannon sobre o firmware em janelas de 256
+  bytes, realçando as regiões da chave/assinatura face ao código.
 
 ```
-cd target3
-python find_offset.py progmem.bin danzhbmzndzdd
+cd target-4
+python entropy_scan.py
 ```
 
-## Target 4 - Cryptographic Assets
-
-Path: [`target4/`](target4/)
-
-- `entropy_scan.py` - Shannon entropy over the firmware in 256-byte windows, highlighting the key/signature regions vs code.
-
-```
-cd target4
-python entropy_scan.py progmem.bin
-```
-
-Key/signature identification itself uses OpenSSL (no code):
+A identificação da chave/assinatura em si usa OpenSSL (sem código):
 
 ```
 openssl base64 -d -A -in key.b64 -out key.der
@@ -74,23 +79,24 @@ openssl asn1parse -inform DER -in key.der
 openssl rsa -inform DER -in key.der -text -noout
 ```
 
-## Target 5 - C&C Password
+## Target 5 - c&c password
 
-No code. Done entirely with OpenSSL and the provided rainbow table. Commands and output are in `TARGETS/target-5/`.
+Sem código próprio. Feito inteiramente com OpenSSL e a rainbow table fornecida.
+Comandos e output estão em `TARGETS/target-5/`.
 
-## Target 6 - OTP Generator
+## Target 6 - OTP generator
 
-Path: [`target6/`](target6/)
+Pasta: `target-6/`
 
-- `otp_capture.py` - captures the serial OTP attempts until the generator repeats and records the parameters.
-- `otp_predict.py` - reproduces the recovered generator and prints the next expected value.
+- `otp_crack.py` - captura as tentativas de OTP pela série até o gerador repetir,
+  recupera os parâmetros do LCG e prevê a próxima OTP.
 
 ```
-cd target6
-python otp_capture.py                   # raw serial capture (.txt) + repeat detection
-python otp_predict.py                   # next OTP from recovered parameters
+cd target-6
+python otp_crack.py                     # captura em bruto (.txt) + deteção de repetição + recuperação do LCG
 ```
 
-## Target 7 - Final Secret
+## Target 7 - Final secret
 
-No code. The successful C&C connection (password + valid OTP) is captured as a serial transcript in `TARGETS/target-7/`.
+Sem código próprio. A ligação ao C&C bem-sucedida (password + OTP válida) é
+capturada como transcript série em `TARGETS/target-7/`.

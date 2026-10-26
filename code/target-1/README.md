@@ -1,11 +1,11 @@
-# Target 1 — Timing attack (código)
+# Target 1 - Timing attack (código)
 
 Camada de I/O série separada da lógica do ataque, como o enunciado pede.
 
 ## Ficheiros
-- `serial_target.py` — comunicação série + medição de tempo (reutilizável nos Targets 6 e 7). **Ajustar a secção CONFIG.**
-- `timing_attack.py` — infere comprimento e recupera a password; grava os tempos em bruto em CSV.
-- `plot_timing.py` — gera os gráficos a partir dos CSV.
+- `serial_target.py` - comunicação série + medição de tempo (reutilizável nos Targets 6 e 7). **Ajustar a secção CONFIG.**
+- `timing_attack.py` - infere comprimento e recupera a password; grava os tempos em bruto em CSV.
+- `plot_timing.py` - gera os gráficos a partir dos CSV.
 
 ## Pré-requisitos
 ```

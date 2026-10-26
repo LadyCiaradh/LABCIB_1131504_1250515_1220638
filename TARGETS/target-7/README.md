@@ -1,7 +1,7 @@
-# Target 7 — Final secret
+# Target 7 - Final secret
 
 ## Artefactos
-- `cc_connection.txt` — transcript da ligação ao C&C bem-sucedida (OTP aceite + linha do secret).
+- `cc_connection.txt` - transcript da ligação ao C&C bem-sucedida (OTP aceite + linha do secret).
 
 ## Resposta (placa 22)
 - **Secret final:** `calmvacationquiltmonkey`
