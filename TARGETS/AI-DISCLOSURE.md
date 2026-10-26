@@ -27,12 +27,7 @@
   (captura das OTPs e recuperação dos parâmetros do LCG).
 - Target 7: apoio na combinação da password do C&C com a OTP prevista para
   estabelecer a ligação ao C&C.
-- Redação e organização do relatório (metodologia, resultados, análise).
-
-## Targets / secções envolvidas
-
-- Scaffolding de submissão (README, `TARGETS/`).
-- Targets 1 a 7 (código, comandos, evidências e redação).
+- Organização do relatório (metodologia, resultados, análise).
 
 ## Confirmação
 
